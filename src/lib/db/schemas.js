@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uuid = require('uuid');
 
 module.exports = {
   userSchema: mongoose.Schema({
@@ -14,9 +15,21 @@ module.exports = {
       type: String,
       default: ''
     },
-    email: {
+	  token: {
+		  type: String,
+		  required: true,
+		  unique: true,
+		  default: uuid.v4
+	  },
+  }),
+  smsCodeSchema: mongoose.Schema({
+    phone: {
       type: String,
-      default: ''
+      required: true
+    },
+    code: {
+      type: String,
+      required: true
     }
   }),
   taskSchema: mongoose.Schema({

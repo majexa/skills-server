@@ -9,9 +9,13 @@
   "author": "Andrey Yartsev <andrey.yartsev.g.@gmail.com> (http://majexa.ru)",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.15.3",
+    "dotenv": "^4.0.0",
     "hapi": "^16.1.0",
     "hapi-cors": "^1.0.1",
+    "jsonwebtoken": "^7.2.1",
     "mongoose": "^4.8.1",
-    "ngn-pagination": "0.0.5"
+    "ngn-pagination": "0.0.5",
+    "uuid": "^3.0.1"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "name": "Skills Server",
+  "version": "0.0.1",
+  "url": "http://localhost:8050/api/v1",
+  "sampleUrl": "http://localhost:8050/api/v1"
+}
