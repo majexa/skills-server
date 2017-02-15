@@ -144,6 +144,41 @@ module.exports = [
     }
   },
   {
+    method: 'POST',
+    path: '/api/v1/challenge',
+    handler: (request, reply) => {
+      const keys = Object.keys(request.payload);
+      const values = Object.values(request.payload);
+      let data = {};
+      for (let i = 0; i < keys.length; i++) {
+        let m = keys[i].match(/(.*)\[(\d+)\]$/);
+        if (m) {
+          if (!data[m[1]]) {
+            if (m[2] == 0) {
+              data[m[1]] = [];
+            } else {
+              data[m[1]] = {};
+            }
+          }
+          if (data[m[1]].length) {
+            data[m[1]].push(values[i]);
+          } else {
+            data[m[1]][m[2]] = values[i];
+          }
+        } else {
+          data[keys[i]] = values[i];
+        }
+      }
+      console.log(data);
+
+
+      request.db.Challenge.create(data, (err, result) => {
+        console.log(err);
+        reply(data);
+      });
+    }
+  },
+  {
     method: 'GET',
     path: '/api/v1/tasks/items',
     handler: (request, reply) => {

@@ -50,6 +50,22 @@ module.exports = {
       required: true,
       default: 'photo'
     }
+  }),
+  challengeSchema: mongoose.Schema({
+    createDate: {
+      type: Date,
+      default: Date.now
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: String
+    },
+    tasks: {
+      type: Array
+    }
   })
 };
 

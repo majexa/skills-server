@@ -17,6 +17,7 @@ module.exports = function () {
         User: mongoose.model('User', schemas.userSchema),
         Task: mongoose.model('Task', schemas.taskSchema),
         SmsCode: mongoose.model('SmsCode', schemas.smsCodeSchema),
+        Challenge: mongoose.model('Challenge', schemas.challengeSchema),
       });
     });
   });
