@@ -37,6 +37,29 @@ let sendSms = function (res, phone, message) {
     smscSendCmd(res, "send", "cost=3&phones=" + phone + "&mes=" + message + "&translit=0&id=0&sender=0&time=0");
 };
 
+const convertPostArrays = function(_data) {
+    const keys = Object.keys(_data);
+    const values = Object.values(_data);
+    let data = {};
+    for (let i = 0; i < keys.length; i++) {
+        let m = keys[i].match(/(.*)\[(\d+)\]\[(\w+)\]$/);
+        if (m) {
+            if (!data[m[1]]) data[m[1]] = [];
+            if (!data[m[1]][m[2]]) data[m[1]][m[2]] = {};
+            data[m[1]][m[2]][m[3]] = values[i];
+        } else {
+            m = keys[i].match(/(.*)\[(\d+)\]$/);
+            if (m) {
+                if (!data[m[1]]) data[m[1]] = [];
+                data[m[1]].push(values[i]);
+            } else {
+                data[keys[i]] = values[i];
+            }
+        }
+    }
+    return data;
+};
+
 module.exports = [
     {
         method: 'GET',
@@ -156,7 +179,7 @@ module.exports = [
                 {
                     title: 'Название',
                     price: 'Цена',
-                    tasks: 'Задачи'
+                    periodType: 'Тип периода'
                 },
                 {
                     _id: 'id'
@@ -180,30 +203,23 @@ module.exports = [
     },
     {
         method: 'POST',
+        path: '/api/v1/challenges/json_edit',
+        handler: (request, reply) => {
+            const data = convertPostArrays(request.payload);
+            request.db.Challenge.update({
+                _id: ObjectId(request.query.id)
+            }, {
+                $set: data
+            }, (err, r) => {
+                console.log(data);
+                reply(null);
+            });
+        }
+    },
+    {
+        method: 'POST',
         path: '/api/v1/challenge',
         handler: (request, reply) => {
-            const keys = Object.keys(request.payload);
-            const values = Object.values(request.payload);
-            let data = {};
-            for (let i = 0; i < keys.length; i++) {
-                let m = keys[i].match(/(.*)\[(\d+)\]$/);
-                if (m) {
-                    if (!data[m[1]]) {
-                        if (m[2] == 0) {
-                            data[m[1]] = [];
-                        } else {
-                            data[m[1]] = {};
-                        }
-                    }
-                    if (data[m[1]].length) {
-                        data[m[1]].push(values[i]);
-                    } else {
-                        data[m[1]][m[2]] = values[i];
-                    }
-                } else {
-                    data[keys[i]] = values[i];
-                }
-            }
             console.log(data);
             request.db.Challenge.create(data, (err, result) => {
                 console.log(err);
