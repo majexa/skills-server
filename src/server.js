@@ -21,7 +21,10 @@ module.exports = function (config) {
         }
       },
     ], () => {
-      server.route(require('./routes'));
+      server.route(require('./loginRoutes'));
+      server.route(require('./restCrudRoutes')('challenge', {
+        title: 'Заголовок'
+      }));
       server.start((err) => {
         if (err)
           throw err;
