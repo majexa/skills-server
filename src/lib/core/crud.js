@@ -7,6 +7,13 @@ const ucFirst = function(str) {
   return f + str.substr(1, str.length - 1);
 };
 
+/**
+ *
+ * @param name
+ * @param model
+ * @param opt
+ * @returns {[*,*,*,*,*]}
+ */
 module.exports = function(name, model, opt) {
 
   if (!opt) opt = {};

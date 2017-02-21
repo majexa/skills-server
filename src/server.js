@@ -5,6 +5,11 @@ process.on('unhandledRejection', (err, promise) => {
   console.error(err);
 });
 
+const debugRoutes = function(routes) {
+  for (let route of routes) console.log(route.method + ' ' + route.path);
+  return routes;
+};
+
 module.exports = function (config) {
   const dbConnect = require('./lib/db');
   dbConnect().then((models) => {
@@ -21,10 +26,8 @@ module.exports = function (config) {
         }
       },
     ], () => {
-      server.route(require('./loginRoutes'));
-      server.route(require('./restCrudRoutes')('challenge', {
-        title: 'Заголовок'
-      }));
+      server.route(debugRoutes(require('./lib/crudRoutes/challenge')));
+      server.route(debugRoutes(require('./lib/routes/login')));
       server.start((err) => {
         if (err)
           throw err;
