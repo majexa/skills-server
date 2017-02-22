@@ -1,4 +1,5 @@
 const Cors = require('hapi-cors');
+var colors = require('colors');
 
 process.on('unhandledRejection', (err, promise) => {
   console.error(`Uncaught error in`, promise);
@@ -6,7 +7,9 @@ process.on('unhandledRejection', (err, promise) => {
 });
 
 const debugRoutes = function(routes) {
-  for (let route of routes) console.log(route.method + ' ' + route.path);
+  for (let route of routes) {
+    console.log(route.method.blue + ' ' + route.path.cyan);
+  }
   return routes;
 };
 
