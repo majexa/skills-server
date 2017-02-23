@@ -1,7 +1,6 @@
-module.exports = require('../core/crud')('challenge', {
-  _id: 'ID',
+module.exports = require('ngn-grid-hapi-mongoose-crud')('challenge', {
   dateCreate: 'Дата',
-  title: 'Название- --мироздания',
+  title: 'Названия',
   price: 'Цена или ценообразование',
   periodType: 'Тип периода'
 });
