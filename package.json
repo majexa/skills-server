@@ -14,6 +14,8 @@
     "dotenv": "^4.0.0",
     "hapi": "^16.1.0",
     "hapi-cors": "^1.0.1",
+    "hapi-ngn-grid-mongoose-crud": "^1.0.4",
+    "inert": "^4.1.0",
     "jsonwebtoken": "^7.2.1",
     "mongoose": "^4.8.1",
     "ngn-grid-items": "^1.0.0",

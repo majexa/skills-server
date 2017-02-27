@@ -1,4 +1,4 @@
 require('dotenv').config();
 require('./src/server')({
-  port: 8050
+  port: 8060
 });

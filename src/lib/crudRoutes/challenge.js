@@ -1,6 +1,11 @@
-module.exports = require('ngn-grid-hapi-mongoose-crud')('challenge', {
-  dateCreate: 'Дата',
-  title: 'Названия',
-  price: 'Цена или ценообразование',
+module.exports = require('hapi-ngn-grid-mongoose-crud')('challenge', {
+  dt: 'Дата',
+  image: 'Лого челленджа',
+  skillType: 'Тип скила',
+  reportType: 'Тип отчёта',
+  title: 'Название',
+  shortDesc: 'Краткое описание',
+  fullDesc: 'Полное описание',
+  price: 'Цена',
   periodType: 'Тип периода'
 });
