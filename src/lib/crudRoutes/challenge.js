@@ -1,6 +1,5 @@
 module.exports = require('hapi-ngn-grid-mongoose-crud')('challenge', {
   dt: 'Дата',
-  image: 'Лого челленджа',
   skillType: 'Тип скила',
   reportType: 'Тип отчёта',
   title: 'Название',

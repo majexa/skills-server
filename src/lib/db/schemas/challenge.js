@@ -6,9 +6,6 @@ module.exports = mongoose.Schema({
     default: Date.now,
     required: true
   },
-  image: {
-    type: String
-  },
   skillType: {
     type: String
   },
