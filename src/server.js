@@ -49,6 +49,7 @@ module.exports = function (config) {
       },
     ], () => {
       server.route(debugRoutes(require('./lib/crudRoutes/challenge')));
+      server.route(debugRoutes(require('./lib/crudRoutes/task')));
       server.route(debugRoutes(require('./lib/crudRoutes/userChallenge')));
       server.route(debugRoutes(require('./lib/crudRoutes/user')));
       server.route(debugRoutes(require('./lib/routes/login')));
