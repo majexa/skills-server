@@ -1,7 +1,13 @@
-module.exports = require('hapi-ngn-grid-mongoose-crud')('userChallenge', {
-  startDt: 'Дата старта',
-  challengeId: 'ID челенджа',
-  userId: 'ID пользователя'
-},
-{"extendPath":"/user{user}"}
-);
+module.exports = [
+  {
+    method: 'GET',
+    //path: opt.apiBase + 'myChallanges',
+    path: '/userChallenges',
+    handler: (request, reply) => {
+      //console.log(Object.keys(request.db));
+      request.db['UserChallenge'].find((err, r) => {
+        reply(r);
+      });
+    }
+  }
+];
