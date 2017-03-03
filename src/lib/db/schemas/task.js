@@ -1,21 +1,12 @@
 const mongoose = require('mongoose');
 
 module.exports = mongoose.Schema({
-  createDate: {
-    type: Date,
-    default: Date.now
-  },
-  text: {
+  description: {
     type: String,
     required: true
   },
-  hasPhoto: {
-    type: Boolean,
-    default: false
-  },
-  type: {
+  challengeId: {
     type: String,
-    required: true,
-    default: 'photo'
+    required: true
   }
 });
