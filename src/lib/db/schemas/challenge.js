@@ -27,5 +27,9 @@ module.exports = mongoose.Schema({
   },
   periodType: {
     type: String
-  }
+  },
+  tasks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Task'
+  }]
 });

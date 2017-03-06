@@ -6,7 +6,7 @@ module.exports = mongoose.Schema({
     required: true
   },
   challengeId: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Challenge'
   }
 });

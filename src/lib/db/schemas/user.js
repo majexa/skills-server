@@ -5,13 +5,7 @@ module.exports = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  password: {
-    type: String
-  },
   phone: {
-    type: String
-  },
-  token: {
     type: String
   }
 });

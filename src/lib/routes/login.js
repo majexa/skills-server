@@ -13,21 +13,23 @@ function genCode() {
 }
 
 let smscSendCmd = function (reply, cmd, arg) {
+  if (!process.env.SMSC_LOGIN) throw new Error('.env.SMSC_LOGIN it node defined');
+  if (!process.env.SMSC_PASSWORD) throw new Error('.env.SMSC_PASSWORD it node defined');
   let url = 'http://smsc.ru/sys/' + cmd + '.php?' + //
     'login=' + process.env.SMSC_LOGIN + //
-    '&psw=' + process.env.SMSC_PASSWORD + '&fmt=1&charset=utf-8&' + arg;
+    '&psw=' + process.env.SMSC_PASSWORD + '&fmt=3&charset=utf-8&' + arg;
   axios.get(url).then(function (response) {
     if (!response.data) {
       reply({error: 'request problem'}).code(500);
       return;
     }
-    let params = response.data.split(',');
-    if (params[1] < 0) {
-      console.log('SMSC RESULT: ' + response.data);
-      reply({error: 'SMSC: sending error'}).code(500);
+    if (response.data.error) {
+      reply(response.data).code(500);
       return;
     }
-    reply({success: 1});
+    if (response.data.cnt) {
+      reply({sucess: 1});
+    }
   }).catch(function (error) {
     console.log(error);
   });
@@ -37,28 +39,28 @@ let sendSms = function (res, phone, message) {
   smscSendCmd(res, "send", "cost=3&phones=" + phone + "&mes=" + message + "&translit=0&id=0&sender=0&time=0");
 };
 
-const convertPostArrays = function (_data) {
-  const keys = Object.keys(_data);
-  const values = Object.values(_data);
-  let data = {};
-  for (let i = 0; i < keys.length; i++) {
-    let m = keys[i].match(/(.*)\[(\d+)\]\[(\w+)\]$/);
-    if (m) {
-      if (!data[m[1]]) data[m[1]] = [];
-      if (!data[m[1]][m[2]]) data[m[1]][m[2]] = {};
-      data[m[1]][m[2]][m[3]] = values[i];
-    } else {
-      m = keys[i].match(/(.*)\[(\d+)\]$/);
-      if (m) {
-        if (!data[m[1]]) data[m[1]] = [];
-        data[m[1]].push(values[i]);
-      } else {
-        data[keys[i]] = values[i];
-      }
-    }
-  }
-  return data;
-};
+// const convertPostArrays = function (_data) {
+//   const keys = Object.keys(_data);
+//   const values = Object.values(_data);
+//   let data = {};
+//   for (let i = 0; i < keys.length; i++) {
+//     let m = keys[i].match(/(.*)\[(\d+)\]\[(\w+)\]$/);
+//     if (m) {
+//       if (!data[m[1]]) data[m[1]] = [];
+//       if (!data[m[1]][m[2]]) data[m[1]][m[2]] = {};
+//       data[m[1]][m[2]][m[3]] = values[i];
+//     } else {
+//       m = keys[i].match(/(.*)\[(\d+)\]$/);
+//       if (m) {
+//         if (!data[m[1]]) data[m[1]] = [];
+//         data[m[1]].push(values[i]);
+//       } else {
+//         data[keys[i]] = values[i];
+//       }
+//     }
+//   }
+//   return data;
+// };
 
 module.exports = [
   {

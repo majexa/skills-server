@@ -1,7 +1,5 @@
-const mongoose = require('mongoose');
 module.exports = require('hapi-ngn-grid-mongoose-crud')('task', {
-  description: 'Название',
-  challengeId: 'Челлендж'
+  description: 'Название'
 }, {
   extendPath: '/challenge{challengeId}'
 });
