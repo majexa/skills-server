@@ -36,6 +36,7 @@ let smscSendCmd = function (reply, cmd, arg) {
 };
 
 let sendSms = function (res, phone, message) {
+  message = process.env.TITLE + ' Code:\n' + message;
   smscSendCmd(res, "send", "cost=3&phones=" + phone + "&mes=" + message + "&translit=0&id=0&sender=0&time=0");
 };
 
