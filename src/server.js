@@ -7,7 +7,7 @@ process.on('unhandledRejection', (err, promise) => {
   console.error(err);
 });
 
-const debugRoutes = function(routes) {
+const debugRoutes = function (routes) {
   for (let route of routes) {
     console.log(route.method.blue + ' ' + route.path.cyan);
   }
@@ -32,6 +32,9 @@ module.exports = function (config) {
       }
     });
     server.connection(config);
+
+
+
     server.register(Inert, (err) => {
       if (err) throw err;
     });
@@ -41,13 +44,41 @@ module.exports = function (config) {
 
     server.register([
       {
+        register: require('good'),
+        options: {
+          // ops: {
+          //   interval: 1000
+          // },
+          // subscribers: {
+          //   'console': ['ops', 'log', 'request', 'error', 'payload']
+          // },
+          // logPayloads: true,
+          // includes: {
+          //   request: ['payload'],
+          //   response: ['payload']
+          // },
+          reporters: {
+            console: [{
+              module: 'good-squeeze',
+              name: 'Squeeze',
+              args: [{error: '*', log: '*', request: '*', response: '*'}]
+            }, {
+              module: 'good-console'
+            }, 'stdout']
+          }
+        }
+      },
+      {
         register: Cors,
         options: {
           origins: ['*'],
           headers: ['x-request', 'x-requested-with', 'authorization', 'Content-Type']
         }
       },
-    ], () => {
+    ], (error) => {
+      if (error)
+        return console.error(error);
+
       server.route(debugRoutes(require('./lib/crudRoutes/challenge')));
       server.route(debugRoutes(require('./lib/crudRoutes/userChallenge')));
       server.route(debugRoutes(require('./lib/crudRoutes/user')));
