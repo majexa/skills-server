@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 module.exports = mongoose.Schema({
   startDt: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
-  challengeId: {
-    type: String
+  challenge: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Challenge'
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

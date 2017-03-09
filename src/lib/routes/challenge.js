@@ -18,15 +18,33 @@ module.exports = [
   {
     method: 'GET',
     path: '/api/v1/chs',
-    handler: (request, reply) => {
-      request.db['Challenge'].find()
-        .populate('tasks')
-        .exec(function (err, challenges) {
-          if (err) console.error(err);
-          reply(challenges);
-        });
+    config: {
+      //auth: 'user',
+      handler: (request, reply) => {
+        request.db['Challenge'].find()
+          .populate('tasks')
+          .exec(function (err, challenges) {
+            if (err) console.error(err);
+            reply(challenges);
+          });
+      }
     }
   },
+  // {
+  //   method: 'GET',
+  //   path: '/api/v1/myCha',
+  //   config: {
+  //     //auth: 'user',
+  //     handler: (request, reply) => {
+  //       request.db['Challenge'].find()
+  //         .populate('tasks')
+  //         .exec(function (err, challenges) {
+  //           if (err) console.error(err);
+  //           reply(challenges);
+  //         });
+  //     }
+  //   }
+  // },
   {
     method: 'POST',
     path: '/api/v1/challenge/{id}/uploadImage',

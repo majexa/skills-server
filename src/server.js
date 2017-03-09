@@ -75,16 +75,18 @@ module.exports = function (config) {
           headers: ['x-request', 'x-requested-with', 'authorization', 'Content-Type']
         }
       },
+      {"register": require('hapi-auth-bearer-token')}
     ], (error) => {
       if (error)
         return console.error(error);
-
+      require('./lib/auth/user')(server);
       server.route(debugRoutes(require('./lib/crudRoutes/challenge')));
       server.route(debugRoutes(require('./lib/crudRoutes/userChallenge')));
       server.route(debugRoutes(require('./lib/crudRoutes/user')));
       server.route(debugRoutes(require('./lib/crudRoutes/task')));
       server.route(debugRoutes(require('./lib/routes/login')));
       server.route(debugRoutes(require('./lib/routes/challenge')));
+      server.route(debugRoutes(require('./lib/routes/userChallenge')));
       server.start((err) => {
         if (err)
           throw err;
