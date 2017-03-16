@@ -3,7 +3,6 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 
-
 function genCode() {
   let text = '';
   let possible = '0123456789';
@@ -108,7 +107,9 @@ module.exports = [
       request.db.SmsCode.findOne({
         code: request.query.code,
         phone: request.query.phone
-      }, (err, profile) => {
+      },
+//        {token: 1},
+        (err, profile) => {
         if (!profile) {
           reply({error: 'no user'});
           return;
@@ -119,7 +120,7 @@ module.exports = [
         });
         reply(Object.assign({
           token: token,
-          expiresIn: new Date() + expiresIn
+          expiresIn: new Date(new Date().getTime() + expiresIn * 1000)
         }, profile._doc));
       });
     }

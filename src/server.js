@@ -18,10 +18,8 @@ module.exports = function (config) {
   const dbConnect = require('./lib/db');
   dbConnect().then((models) => {
     const Hapi = require('hapi');
-
     const Path = require('path');
     const uploadsFolder = Path.join(__dirname, '../uploads');
-
     const server = new Hapi.Server({
       connections: {
         routes: {
@@ -32,9 +30,6 @@ module.exports = function (config) {
       }
     });
     server.connection(config);
-
-
-
     server.register(Inert, (err) => {
       if (err) throw err;
     });
